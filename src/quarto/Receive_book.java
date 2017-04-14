@@ -255,7 +255,7 @@ public class Receive_book extends javax.swing.JFrame {
                jButton7.setEnabled(false);
                if(count==0)
                {
-                    JOptionPane.showMessageDialog(null,"Invalid Student ID");
+                    JOptionPane.showMessageDialog(null,"nO BOOKS ISSUED");
                }
                ps.close();
                rs.close();
@@ -289,8 +289,8 @@ public class Receive_book extends javax.swing.JFrame {
             ps.setString(2,jid.getText());
             ps.execute();
             JOptionPane.showMessageDialog(null,"Returned Succesfully");
-            String sql1,sql2;
-             sql1="Update book_info SET availability=? where id=?";
+            String sql1;
+            sql1="Update book_info SET availability=? where id=?";
             pstt=cn.prepareStatement(sql1);
             pstt.setString(1,"Yes");
             pstt.setString(2,idb);

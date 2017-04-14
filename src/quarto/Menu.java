@@ -929,7 +929,8 @@ catch(Exception e)
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        deletelibrarian dl=new deletelibrarian();
+        dl.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
