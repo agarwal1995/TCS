@@ -141,7 +141,7 @@ public class Student_table extends javax.swing.JFrame {
        if(evt.getKeyCode()== KeyEvent.VK_ENTER)
        {
            text_lbnm.setText(text_lbnm.getText());
-           if(text_lbnm.getText()==null)
+           if(text_lbnm.getText().equals(""))
         {
         try {
             

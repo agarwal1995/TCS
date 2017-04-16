@@ -5,6 +5,7 @@
  */
 package quarto;
 
+import com.sun.glass.events.KeyEvent;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -12,7 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -65,8 +68,6 @@ PreparedStatement pst=null;
         text_libfirstname = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        text_dob = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
         text_contact = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
@@ -83,6 +84,8 @@ PreparedStatement pst=null;
         text_libsurname = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jButton5 = new javax.swing.JButton();
+        dob = new com.toedter.calendar.JDateChooser();
+        jButton3 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -109,6 +112,7 @@ PreparedStatement pst=null;
         jButton8 = new javax.swing.JButton();
         text_loc2 = new javax.swing.JTextField();
         jSeparator12 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new java.awt.Dimension(766, 490));
@@ -221,7 +225,7 @@ PreparedStatement pst=null;
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addComponent(jLabel5)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -260,7 +264,7 @@ PreparedStatement pst=null;
                     .addComponent(jLabel8)
                     .addComponent(jLabel6)
                     .addComponent(jLabel4))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jPanel6.setLayout(new java.awt.CardLayout());
@@ -298,13 +302,6 @@ PreparedStatement pst=null;
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("First Name :");
 
-        text_dob.setBackground(new java.awt.Color(51, 51, 51));
-        text_dob.setForeground(new java.awt.Color(255, 255, 255));
-        text_dob.setBorder(null);
-
-        jSeparator2.setBackground(new java.awt.Color(255, 204, 51));
-        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 102, 0), 0));
-
         jLabel14.setBackground(new java.awt.Color(51, 51, 51));
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Contact :");
@@ -315,6 +312,11 @@ PreparedStatement pst=null;
         text_contact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text_contactActionPerformed(evt);
+            }
+        });
+        text_contact.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                text_contactKeyTyped(evt);
             }
         });
 
@@ -404,18 +406,23 @@ PreparedStatement pst=null;
             }
         });
 
+        dob.setBackground(new java.awt.Color(51, 51, 51));
+        dob.setForeground(new java.awt.Color(255, 255, 255));
+        dob.setDateFormatString("yyyy-MM-dd");
+
+        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Update");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(351, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -431,33 +438,41 @@ PreparedStatement pst=null;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(text_contact)
+                        .addComponent(text_contact, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                         .addComponent(jSeparator4)
                         .addComponent(Text_email)
                         .addComponent(jSeparator6)
                         .addGroup(jPanel7Layout.createSequentialGroup()
                             .addComponent(Radio_male)
                             .addGap(18, 18, 18)
-                            .addComponent(Radio_female))
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(text_dob, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel7Layout.createSequentialGroup()
-                                    .addComponent(text_libfirstname, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel20))
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                                .addComponent(text_libsurname)))))
+                            .addComponent(Radio_female)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(text_libfirstname, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel20))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                            .addComponent(text_libsurname)))
+                    .addComponent(dob, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(126, 126, 126))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,12 +490,10 @@ PreparedStatement pst=null;
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(text_dob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(dob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
                             .addComponent(text_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -505,13 +518,14 @@ PreparedStatement pst=null;
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel18)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel17)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel7, "card2");
@@ -589,7 +603,7 @@ PreparedStatement pst=null;
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
                     .addComponent(jLabel29))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel9, "card4");
@@ -707,19 +721,20 @@ PreparedStatement pst=null;
         text_loc2.setForeground(new java.awt.Color(255, 255, 255));
         text_loc2.setBorder(null);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(351, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
@@ -748,6 +763,16 @@ PreparedStatement pst=null;
                     .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(99, 99, 99))
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -791,13 +816,14 @@ PreparedStatement pst=null;
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jLabel27)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel26)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel10, "card2");
@@ -833,6 +859,18 @@ PreparedStatement pst=null;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void clear()
+    {
+        
+        Text_email.setText("");
+        text_contact.setText("");
+        dob.setDate(null);
+        text_libfirstname.setText("");
+        text_libsurname.setText("");
+        Radio_male.setSelected(false);
+        Radio_female.setSelected(false);
+
+    }
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         
         jPanel6.removeAll();
@@ -877,10 +915,6 @@ PreparedStatement pst=null;
         
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void text_libfirstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_libfirstnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_text_libfirstnameActionPerformed
-
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
         
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quarto/Images/Reading Ebook-96.png")));
@@ -923,47 +957,6 @@ PreparedStatement pst=null;
         
     }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void text_contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_contactActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_text_contactActionPerformed
-
-    private void Radio_femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Radio_femaleActionPerformed
-        
-        
-        gender="Female";
-        Radio_male.setSelected(false);
-        Radio_female.setSelected(true);
-        
-        
-        
-        
-    }//GEN-LAST:event_Radio_femaleActionPerformed
-
-    private void Radio_maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Radio_maleActionPerformed
-        
-        
-        gender="Male";
-        Radio_male.setSelected(true);
-        Radio_female.setSelected(false);
-        
-        
-    }//GEN-LAST:event_Radio_maleActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-     
-        Text_email.setText("");
-        text_contact.setText("");
-        text_dob.setText("");
-        text_libfirstname.setText("");
-        text_libsurname.setText("");
-               
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
        
         
@@ -995,113 +988,6 @@ PreparedStatement pst=null;
          jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quarto/Images/Circled Left 2 Filled-100.png")));
         
     }//GEN-LAST:event_jLabel7MouseExited
-
-    private void jLabel17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseEntered
-     
-        
-        
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quarto/Images/Book Shelf-96.png")));
-        
-    }//GEN-LAST:event_jLabel17MouseEntered
-
-    private void jLabel17MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseExited
-       
-        
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quarto/Images/Book Shelf Filled-100.png")));
-        
-        
-        
-    }//GEN-LAST:event_jLabel17MouseExited
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       try
-       {
-        String sql ="insert into student_info (firstname,surname,Dob,Contact,Email,Gender) values (?,?,?,?,?,?) ";
-        pst=conn.prepareStatement(sql);
-        pst.setString(1,text_libfirstname.getText());
-        pst.setString(2,text_libsurname.getText());
-        pst.setString(3,text_dob.getText());
-        pst.setString(4,text_contact.getText());
-        pst.setString(5,Text_email.getText());
-        
-        pst.setString(6,gender);
-          if(text_libfirstname.getText()==null||text_libsurname.getText()==null||text_dob.getText()==null||Text_email.getText()==null||text_contact.getText()==null||gender==null)
-        {
-            JOptionPane.showMessageDialog(null,"Fill all the blanks");
-            
-        }
-        
-      
-        else
-        {
-            pst.execute(); 
-        JOptionPane.showMessageDialog(null,"Data is saved successfully");
-        
-        String p=text_libfirstname.getText();
-        String o=Text_email.getText();
-       
-        String qww="select id,firstname from student_info where (firstname=? and Email=?)";
-        pst=conn.prepareStatement(qww);
-        pst.setString(1, p);
-        pst.setString(2, o);
-                
-        rs=pst.executeQuery();
-        while(rs.next())
-        {
-        f=rs.getString(1);
-        
-        }
-        Enter_pass1 ob=new Enter_pass1();
-        ob.setVisible(true);
-        }
-    } 
-catch (SQLException | HeadlessException e)
-{
-    JOptionPane.showMessageDialog(null,e);
-}
-finally 
-{ try
-{ rs.close(); 
-pst.close(); 
-} 
-catch(Exception e)
-{ 
-  
-}
-}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-  
-        deletestudent ds=new deletestudent();
-        ds.setVisible(true);
-        
-        
-        
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-     
-       Student_table ob=new Student_table();
-       ob.setVisible(true);
-        
-        
-        
-    }//GEN-LAST:event_jLabel17MouseClicked
 
     private void text_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_bookActionPerformed
         // TODO add your handling code here:
@@ -1200,7 +1086,9 @@ catch(Exception e)
     }//GEN-LAST:event_jLabel26MouseExited
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        deletebook db = new deletebook();
+        db.setVisible(true);
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jLabel12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseEntered
@@ -1254,6 +1142,144 @@ catch(Exception e)
         
     }//GEN-LAST:event_jLabel11MouseExited
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Update_book ub=new Update_book();
+        ub.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        deletestudent ds=new deletestudent();
+        ds.setVisible(true);
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jLabel17MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseExited
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quarto/Images/Book Shelf Filled-100.png")));
+
+    }//GEN-LAST:event_jLabel17MouseExited
+
+    private void jLabel17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseEntered
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quarto/Images/Book Shelf-96.png")));
+
+    }//GEN-LAST:event_jLabel17MouseEntered
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+
+        Student_table ob=new Student_table();
+        ob.setVisible(true);
+
+    }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        clear();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void Radio_maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Radio_maleActionPerformed
+
+        gender="Male";
+        Radio_male.setSelected(true);
+        Radio_female.setSelected(false);
+
+    }//GEN-LAST:event_Radio_maleActionPerformed
+
+    private void Radio_femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Radio_femaleActionPerformed
+
+        gender="Female";
+        Radio_male.setSelected(false);
+        Radio_female.setSelected(true);
+
+    }//GEN-LAST:event_Radio_femaleActionPerformed
+
+    private void text_contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_contactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_contactActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try
+        {
+            String sql ="insert into student_info (firstname,surname,Dob,Contact,Email,Gender) values (?,?,?,?,?,?) ";
+            pst=conn.prepareStatement(sql);
+            pst.setString(1,text_libfirstname.getText());
+            pst.setString(2,text_libsurname.getText());
+            pst.setString(3,((JTextField)dob.getDateEditor().getUiComponent()).getText());
+            pst.setString(4,text_contact.getText());
+            pst.setString(5,Text_email.getText());
+
+            pst.setString(6,gender);
+            if(text_libfirstname.getText().equals("") ||text_libsurname.getText().equals("") ||((JTextField)dob.getDateEditor().getUiComponent()).getText().equals("")|| Text_email.getText().equals("") ||text_contact.getText().equals("") ||gender.equals(""))
+            {
+                JOptionPane.showMessageDialog(null,"Fill all the blanks");
+
+            }
+            else if(!(Pattern.matches("^[a-zA-Z0-9]+[@]{1}+[a-zA-Z0-9]+[.]{1}+[a-zA-Z0-9]+$",Text_email.getText())))
+          {
+               JOptionPane.showMessageDialog(null,"Invalid Email Address ");
+          }
+
+            else
+            {
+                pst.execute();
+                JOptionPane.showMessageDialog(null,"Data is saved successfully");
+
+                String p=text_libfirstname.getText();
+                String o=Text_email.getText();
+
+                clear();
+                String qww="select id,firstname from student_info where (firstname=? and Email=?)";
+                pst=conn.prepareStatement(qww);
+                pst.setString(1, p);
+                pst.setString(2, o);
+
+                rs=pst.executeQuery();
+                while(rs.next())
+                {
+                    f=rs.getString(1);
+
+                }
+                Enter_pass1 ob=new Enter_pass1();
+                ob.setVisible(true);
+            }
+        }
+        catch (SQLException | HeadlessException e)
+        {
+            JOptionPane.showMessageDialog(null,e);
+        }
+        finally
+        { try
+            { rs.close();
+                pst.close();
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void text_libfirstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_libfirstnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_libfirstnameActionPerformed
+
+    private void text_contactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_contactKeyTyped
+         char c=evt.getKeyChar();
+        if(!(Character.isDigit(c)) || (c==KeyEvent.VK_BACKSPACE) || (c==KeyEvent.VK_DELETE))
+        {
+           Toolkit tk=getToolkit();
+           tk.beep();
+           evt.consume();
+        }
+    }//GEN-LAST:event_text_contactKeyTyped
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Update_student us=new Update_student();
+        us.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     
   
     
@@ -1293,7 +1319,10 @@ catch(Exception e)
     private javax.swing.JRadioButton Radio_male;
     private javax.swing.JTextField Text_email;
     private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser dob;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -1338,7 +1367,6 @@ catch(Exception e)
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
@@ -1348,7 +1376,6 @@ catch(Exception e)
     private javax.swing.JTextField text_author;
     private javax.swing.JTextField text_book;
     private javax.swing.JTextField text_contact;
-    private javax.swing.JTextField text_dob;
     private javax.swing.JTextField text_libfirstname;
     private javax.swing.JTextField text_libsurname;
     private javax.swing.JTextField text_loc1;

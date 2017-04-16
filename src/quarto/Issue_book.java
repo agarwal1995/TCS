@@ -13,6 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -252,6 +255,8 @@ public class Issue_book extends javax.swing.JFrame {
 
     private void button_issueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_issueActionPerformed
    
+        DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        Date d=new Date();
         if("".equals(text_stid.getText()))
         {
              JOptionPane.showMessageDialog(null,"Enter Student ID");
@@ -289,11 +294,13 @@ public class Issue_book extends javax.swing.JFrame {
             } 
             if(coun<3)
             {
-                String q="insert into book_issue (Book_id,Student_id,Book_name)" + " values(?,?,?)";
+                String q="insert into book_issue (Book_id,Student_id,Book_name,issuedate)" + " values(?,?,?,?)";
                  ps=cn.prepareStatement(q);
             ps.setString(1,text_booknm.getText());
             ps.setString(2,text_stid.getText());
              ps.setString(3,label_book.getText());
+             ps.setString(4,(df.format(d)).toString());
+             
             ps.execute();
                 JOptionPane.showMessageDialog(null,"Issue Successful");
                 String sql1;

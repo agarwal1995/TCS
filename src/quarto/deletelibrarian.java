@@ -229,8 +229,8 @@ public class deletelibrarian extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(surname, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(firstname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(firstname, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -336,12 +336,22 @@ public class deletelibrarian extends javax.swing.JFrame {
 
     private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebuttonActionPerformed
 
-        String sql;
+        String sql,sql1;
+        sql1="Delete from users where id=?";
         sql="Delete from staff_info where id=?";
         try{
             ps=cn.prepareStatement(sql);
             ps.setString(1,id.getText());
             ps.execute();
+            
+            StringBuilder temp=new StringBuilder(id.getText());
+            temp.setCharAt(1,'I');
+            temp.setCharAt(2,'B');
+            String nt=new String(temp);
+            
+            pst=cn.prepareStatement(sql1);
+            pst.setString(1,nt);
+            pst.execute();
             JOptionPane.showMessageDialog(null,"Deleted Librarian Information Succesfully");
                 id.setText("");
                 firstname.setText("");
@@ -351,7 +361,8 @@ public class deletelibrarian extends javax.swing.JFrame {
                 dob.setText("");
                 genderlabel.setText("");
                 deletebutton.setEnabled(false);
-            
+            ps.close();
+            pst.close();
         }
         catch(Exception e)
         {

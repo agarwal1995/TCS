@@ -1,6 +1,7 @@
 
 package quarto;
 
+import com.sun.glass.events.KeyEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -69,9 +70,19 @@ public class Liblogin extends javax.swing.JFrame {
         lib_text.setForeground(new java.awt.Color(255, 255, 255));
         lib_text.setBorder(null);
         lib_text.setCaretColor(new java.awt.Color(255, 255, 255));
+        lib_text.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lib_textMouseClicked(evt);
+            }
+        });
         lib_text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lib_textActionPerformed(evt);
+            }
+        });
+        lib_text.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lib_textKeyPressed(evt);
             }
         });
         jPanel3.add(lib_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 75, 273, 28));
@@ -92,6 +103,11 @@ public class Liblogin extends javax.swing.JFrame {
                 lib_comboActionPerformed(evt);
             }
         });
+        lib_combo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lib_comboKeyPressed(evt);
+            }
+        });
         jPanel3.add(lib_combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 234, 273, 28));
 
         lib_button.setBackground(new java.awt.Color(52, 41, 41));
@@ -103,6 +119,11 @@ public class Liblogin extends javax.swing.JFrame {
         lib_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lib_buttonActionPerformed(evt);
+            }
+        });
+        lib_button.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lib_buttonKeyPressed(evt);
             }
         });
         jPanel3.add(lib_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 296, 231, 46));
@@ -144,17 +165,9 @@ public class Liblogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lib_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lib_textActionPerformed
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_lib_textActionPerformed
-
-    private void lib_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lib_buttonActionPerformed
-        
-        
+    
+    public void loginclicked()
+    {
         String sql="select id,username,password,division,emp_id from Users where (username=? and password=? and division=?)";
         
          try
@@ -224,6 +237,19 @@ public class Liblogin extends javax.swing.JFrame {
                 
             }
         }
+    }
+    private void lib_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lib_textActionPerformed
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_lib_textActionPerformed
+
+    private void lib_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lib_buttonActionPerformed
+        
+        loginclicked();
+        
         
         
         
@@ -239,12 +265,39 @@ public class Liblogin extends javax.swing.JFrame {
     }//GEN-LAST:event_lib_passActionPerformed
 
     private void lib_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lib_passKeyPressed
-       
+       if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            lib_combo.requestFocus();
+        }
     }//GEN-LAST:event_lib_passKeyPressed
 
     private void lib_passMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lib_passMouseClicked
         lib_pass.setText("");
     }//GEN-LAST:event_lib_passMouseClicked
+
+    private void lib_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lib_textMouseClicked
+       lib_text.setText("");
+    }//GEN-LAST:event_lib_textMouseClicked
+
+    private void lib_textKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lib_textKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            lib_pass.setText("");
+            lib_pass.requestFocus();
+        }
+    }//GEN-LAST:event_lib_textKeyPressed
+
+    private void lib_comboKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lib_comboKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            
+            lib_button.requestFocus();
+        }
+    }//GEN-LAST:event_lib_comboKeyPressed
+
+    private void lib_buttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lib_buttonKeyPressed
+        loginclicked();
+    }//GEN-LAST:event_lib_buttonKeyPressed
 
     /**
      * @param args the command line arguments

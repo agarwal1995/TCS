@@ -14,6 +14,7 @@ package quarto;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +71,11 @@ PreparedStatement pst=null;
         jp1.setBackground(new java.awt.Color(51, 51, 51));
         jp1.setForeground(new java.awt.Color(255, 255, 255));
         jp1.setBorder(null);
+        jp1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jp1KeyPressed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(51, 51, 51));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -78,6 +84,11 @@ PreparedStatement pst=null;
         jp2.setBackground(new java.awt.Color(51, 51, 51));
         jp2.setForeground(new java.awt.Color(255, 255, 255));
         jp2.setBorder(null);
+        jp2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jp2KeyPressed(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(51, 51, 51));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,6 +102,11 @@ PreparedStatement pst=null;
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -160,8 +176,8 @@ PreparedStatement pst=null;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+    public void submit()
+    {
         String qw=jp1.getText();
         int l=qw.length(),c=0;
         if(qw.equals(jp2.getText()))
@@ -228,14 +244,42 @@ PreparedStatement pst=null;
                  JOptionPane.showMessageDialog(null,"Password in both fields are not same ");   
                     }
                     
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
         
         
+        submit();
         
         
         
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jp1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jp1KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            jp2.setText("");
+            jp2.requestFocus();
+        }
+    }//GEN-LAST:event_jp1KeyPressed
+
+    private void jp2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jp2KeyPressed
+       if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            
+            jButton1.requestFocus();
+        }
+    }//GEN-LAST:event_jp2KeyPressed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            
+            submit();
+        }
+    }//GEN-LAST:event_jButton1KeyPressed
     private void text_act()
     {
 
